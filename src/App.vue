@@ -81,7 +81,7 @@
         const i = this.tasks.findIndex(task => task.id === +id);
         if (i !== -1) {
           this.tasks.splice(i, 1);
-        }npm run build
+        }
       },
       AllClearTasks() {
         this.tasks = this.tasks.filter(task => {
