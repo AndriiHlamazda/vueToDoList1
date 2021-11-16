@@ -75,6 +75,7 @@
         const i = this.tasks.findIndex(task => task.id === +id);
         if (i !== -1) {
           this.tasks[i].isDone = !this.tasks[i].isDone;
+          this.tasks[i].edit_mode = false;
         }
       },
       deleteTask(id) {

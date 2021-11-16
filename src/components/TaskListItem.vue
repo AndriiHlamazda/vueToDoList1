@@ -17,7 +17,7 @@
       <input v-else
              v-model="task.title"
              type="text"
-             @keyup.enter="saveTitleMode"
+             @keyup.enter ="saveTitleMode"
              class="input"
              v-focus
       >
