@@ -30,11 +30,6 @@
       deleteTask(id) {
         this.$emit('delete-task', id)
       },
-
-  },
+    },
   }
 </script>
-
-<style scoped>
-
-</style>

@@ -1,32 +1,40 @@
 <template>
+  <div>
   <li
-    class="line"
+    class="flex justify-between items-center text-3xl border-solid border-2 border-grey bg-gray-100 rounded my-0,5 px-2.5 py-2"
   >
-    <div class="line2">
+    <div class="flex justify-between items-center">
       <input
         @click="CompleteTask"
         type="checkbox"
-        class="tick"
-        v-bind:checked="isDone"
+        class="transform scale-150"
+        :checked="isDone"
       >
-      <span v-if="!task.edit_mode"
-            :class="{ descriptionCompleted: isDone }"
-            @dblclick="editTitleMode(task)"
+      <span v-if="mode"
+            class="ml-2"
+            :class="{ [`line-through text-gray-500`]: isDone }"
+            @dblclick="editTitleMode"
             >
              {{ task.title }}</span>
       <input v-else
              v-model="task.title"
              type="text"
              @keyup.enter ="saveTitleMode"
-             class="input"
+             class="outline-none ml-2"
              v-focus
       >
-
     </div>
-    <Modal :task="task"
-           @delete-task="deleteTask"
-    />
+    <i class="material-icons"
+       @click="modalShow">
+      clear
+    </i>
   </li>
+  <Modal :task="task"
+         v-if="isInfoModal"
+         @delete-task="deleteTask"
+         @close-modal="closeModal"
+  />
+  </div>
 </template>
 
 <script>
@@ -47,24 +55,31 @@
       return {
         id: this.task.id,
         isDone: this.task.isDone,
+        isInfoModal: false,
+        mode: this.task.mode,
       }
-
     },
 
     methods: {
+      closeModal() {
+        this.isInfoModal = false;
+      },
       CompleteTask() {
         this.$emit('complete-task', this.id)
       },
       deleteTask() {
         this.$emit('delete-task', this.id)
       },
-      editTitleMode(task) {
-        if (task.isDone !== true) {
-          this.$set(task, 'edit_mode', true);
+      editTitleMode() {
+        if (this.task.isDone !== true) {
+          this.mode = false;
         }
       },
       saveTitleMode() {
-        this.task.edit_mode = false;
+        this.mode = true;
+      },
+      modalShow() {
+        this.isInfoModal = true;
       },
 
     },
@@ -79,43 +94,3 @@
 
   }
 </script>
-
-<style scoped>
-  .line {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 30px;
-    padding: 6px 0 4px 10px;
-    border: 1px solid #cecece;
-    background: #F6F6f6;
-    border-radius: 4px;
-    margin-bottom: 4px;
-  }
-
-  .line2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .tick {
-    transform: scale(1.5);
-  }
-
-  span {
-    padding: 0px 0px 0px 10px;
-  }
-
-  .descriptionCompleted {
-    text-decoration: line-through;
-    color: darkgray;
-  }
-
-  .input {
-    font-size: 30px;
-    padding: 0px 0px 0px 10px;
-    outline: none;
-  }
-
-</style>

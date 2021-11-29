@@ -1,8 +1,9 @@
 <template>
-  <div id="vue-app">
-    <HelloWorld
-    />
-    <ul class="todo-list" id="active">
+  <div id="vue-app" class="max-w-2xl m-auto ">
+    <div class="text-7xl m-14 text-white">
+      <h1>Todo</h1>
+    </div>
+    <ul id="active">
       <TaskList :tasks="activeTasks"
                 @complete-task="toggleTask"
                 @delete-task="deleteTask"/>
@@ -11,7 +12,7 @@
       @create-task="handleNewTask"
     />
     <div class="myTodos">
-      <ul class="todo-list" id="comp">
+      <ul id="comp">
         <TaskList :tasks="completedTasks"
                   @complete-task="toggleTask"
                   @delete-task="deleteTask"/>
@@ -24,7 +25,6 @@
 </template>
 
 <script>
-  import HelloWorld from './components/HelloWorld'
   import ToDoInput from './components/ToDoInput'
   import TaskList from './components/TaskList'
   import Controls from './components/Controls'
@@ -32,7 +32,7 @@
   export default {
     name: 'App',
     components: {
-      HelloWorld, ToDoInput, TaskList, Controls
+      ToDoInput, TaskList, Controls
     },
 
     data() {
@@ -68,6 +68,7 @@
             title: newTask,
             id: Math.random(),
             isDone: false,
+            mode: true,
           });
         }
       },
@@ -75,7 +76,7 @@
         const i = this.tasks.findIndex(task => task.id === +id);
         if (i !== -1) {
           this.tasks[i].isDone = !this.tasks[i].isDone;
-          this.tasks[i].edit_mode = false;
+          this.tasks[i].mode = true;
         }
       },
       deleteTask(id) {
@@ -104,29 +105,13 @@
 </script>
 
 <style>
-  * {
-    padding: 0;
-    margin: 0;
-    border: 0;
-  }
-
   body {
     background-image: url(assets/1559370648_6.jpeg);
     background-size: 100% 26%;
     background-repeat: no-repeat;
     cursor: default;
     font-family: 'Roboto', sans-serif;
-    min-height: 100vh;
-  }
-
-  #vue-app {
-    max-width: 700px;
-    margin: 0px auto;
-    min-height: 100vh;
-  }
-
-  .todo-list {
-    list-style-type: none;
-    padding: 1px;
+    height: 100vh;
+    width: 100vw;
   }
 </style>

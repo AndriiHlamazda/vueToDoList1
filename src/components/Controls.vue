@@ -1,8 +1,8 @@
 <template>
-  <div class="controls">
+  <div class="flex justify-between my-4">
     <p class="score"
        id="todosLeft"> {{ counter }} </p>
-    <p class="AllClear"
+    <p class="hover:text-purple-600"
        @click="AllClearTasks">
       Clear Completed</p>
   </div>
@@ -42,16 +42,3 @@
     },
   }
 </script>
-
-<style scoped>
-  .controls {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
-  }
-
-  .AllClear:hover {
-    color: cornflowerblue;
-  }
-
-</style>
